@@ -194,3 +194,60 @@
 ;;; (for-each println (range 1 (inc 5)))
 
 ;;; Exercise 2.24
+
+; '(1 (2 (3 4)))
+;  (1     (2 (3 4)))
+;   1     2
+;        / \
+;       3  4
+
+;;; Exercise 2.25
+
+(comment
+  (let [lst '(1 3 (5 7) 9)]
+               (rest (first (rest (rest lst)))))
+  (let [lst '((7))]
+               (first (first lst)))
+  (let [lst '(1 (2 (3 (4 (5 (6 7))))))]
+    lst))
+
+;;; Exercise 2.26
+
+(comment
+  (let [x (list 1 2 3)
+        y (list 4 5 6)]
+    (println "(append x y):" (= (append x y) (list 1 2 3 4 5 6)))
+    (println "(cons x y):" (= (cons x y) '((1 2 3) 4 5 6)))
+    (println "(list x y):" (= (list x y) '((1 2 3) (4 5 6))))))
+
+;;; Exercise 2.27
+
+(defn deep-reverse [coll]
+  (if (seq? coll)
+    (reverse (map deep-reverse coll))
+    coll))
+
+;;; Exercise 2.28
+
+(defn fringe [tree]
+  (reduce (fn [acc elem]
+            (if (seq? elem)
+              (concat acc (fringe elem))
+              (conj acc elem)))
+          []
+          tree))
+
+(comment
+  (let [x '((1 2) (3 4))]
+    (println "(fringe x):" (fringe x))
+    (println "(fringe x x):" (fringe (list x x)))))
+
+;;; Exercise 2.29
+
+(defn make-mobile [left right] (list left right))
+(defn make-branch [length structure] (list length structure))
+(defn left-branch [mobile] (first mobile))
+(defn right-branch [mobile] (second mobile))
+(defn branch-length [branch] (first branch))
+(defn branch-structure [branch] (second branch))
+
